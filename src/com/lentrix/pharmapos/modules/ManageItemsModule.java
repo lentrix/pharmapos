@@ -77,7 +77,10 @@ public class ManageItemsModule extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(30, 0), new java.awt.Dimension(30, 70), new java.awt.Dimension(30, 32767));
+        jPanel4 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        barcodeSearchField = new javax.swing.JTextField();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(30, 0), new java.awt.Dimension(20, 70), new java.awt.Dimension(30, 32767));
         jLabel10 = new javax.swing.JLabel();
         filterNameField = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
@@ -118,12 +121,32 @@ public class ManageItemsModule extends javax.swing.JFrame {
         jPanel1.add(jLabel2, java.awt.BorderLayout.CENTER);
 
         jPanel3.setBackground(new java.awt.Color(254, 254, 254));
+
+        jPanel4.setBackground(new java.awt.Color(254, 254, 254));
+
+        jLabel11.setText("Search Bar Code:");
+        jPanel4.add(jLabel11);
+
+        barcodeSearchField.setPreferredSize(new java.awt.Dimension(200, 27));
+        barcodeSearchField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                barcodeSearchFieldFocusGained(evt);
+            }
+        });
+        barcodeSearchField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                barcodeSearchFieldActionPerformed(evt);
+            }
+        });
+        jPanel4.add(barcodeSearchField);
+
+        jPanel3.add(jPanel4);
         jPanel3.add(filler1);
 
         jLabel10.setText("Filter Name:");
         jPanel3.add(jLabel10);
 
-        filterNameField.setPreferredSize(new java.awt.Dimension(250, 27));
+        filterNameField.setPreferredSize(new java.awt.Dimension(200, 27));
         filterNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 filterNameFieldActionPerformed(evt);
@@ -159,11 +182,6 @@ public class ManageItemsModule extends javax.swing.JFrame {
         jLabel6.setText("Bar Code:");
 
         barCodeField.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
-        barCodeField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                barCodeFieldActionPerformed(evt);
-            }
-        });
 
         jLabel7.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(254, 254, 230));
@@ -266,11 +284,12 @@ public class ManageItemsModule extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(newButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_START);
 
+        jTable1.setFont(new java.awt.Font("NanumGothic", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
@@ -359,6 +378,25 @@ public class ManageItemsModule extends javax.swing.JFrame {
         refreshForm();
     }//GEN-LAST:event_jTable1MouseClicked
 
+    private void barcodeSearchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barcodeSearchFieldActionPerformed
+        String barCode = barcodeSearchField.getText();
+        
+        for(int i=0; i<items.size(); i++) {
+            Item itm = items.get(i);
+            if(itm.getBarCode().equals(barCode)){
+                selectedItem = itm;
+                refreshForm();
+                return;
+            }
+        }
+        Helper.error(this, "Bar Code not found on the records!");
+    }//GEN-LAST:event_barcodeSearchFieldActionPerformed
+
+    private void barcodeSearchFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_barcodeSearchFieldFocusGained
+        barcodeSearchField.setSelectionStart(0);
+        barcodeSearchField.setSelectionEnd(barcodeSearchField.getText().length());
+    }//GEN-LAST:event_barcodeSearchFieldFocusGained
+
     private void refreshForm() {
         nameField.setText(selectedItem.getName());
         genericNameField.setText(selectedItem.getGeneric());
@@ -367,27 +405,16 @@ public class ManageItemsModule extends javax.swing.JFrame {
         discountRateField.setText(String.valueOf(selectedItem.getDisc()));
         nameField.grabFocus();
     }
-    private void barCodeFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_barCodeFieldActionPerformed
-        String barCode = barCodeField.getText();
-        
-        for(int i=0; i<items.size(); i++) {
-            Item itm = items.get(i);
-            if(itm.getBarCode().equals(barCode)){
-                selectedItem = itm;
-                refreshForm();
-            }
-            
-        }
-    }//GEN-LAST:event_barCodeFieldActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField barCodeField;
+    private javax.swing.JTextField barcodeSearchField;
     private javax.swing.JFormattedTextField discountRateField;
     private javax.swing.Box.Filler filler1;
     private javax.swing.JTextField filterNameField;
     private javax.swing.JTextField genericNameField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -399,6 +426,7 @@ public class ManageItemsModule extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField manufacturerField;

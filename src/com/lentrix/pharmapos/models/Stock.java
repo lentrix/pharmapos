@@ -172,7 +172,22 @@ public class Stock {
             return Stock.load(rs.getInt(1));
             
         }else {
-            throw new SQLException("Not stock available for this item.");
+            throw new SQLException("According to system records,\nthis item is out of stock."
+                    + "\nPlease verify actual stock and restock if necessary.");
+        }
+    }
+    
+    public static Stock findNextAvailableStock2(int itemId) throws SQLException {
+        ResultSet rs = DB.connect().createStatement().executeQuery(
+                "SELECT id FROM stock WHERE item_id=" + itemId 
+                        + " AND remaining>0 ORDER BY id LIMIT 1, 2");
+        if(rs.first()) {
+            
+            return Stock.load(rs.getInt(1));
+            
+        }else {
+            throw new SQLException("According to system records,\nthis item is out of stock."
+                    + "\nPlease verify actual stock and restock if necessary.");
         }
     }
     
@@ -227,5 +242,25 @@ public class Stock {
 
     public void setUpdatedDate(java.sql.Date updatedDate) {
         this.updatedDate = updatedDate;
+    }
+    
+    public static Stock barCodeSearch(String barCode) throws SQLException {
+        PreparedStatement ps = DB.connect().prepareStatement(
+                "SELECT i.bar_code, s.* FROM stock s "
+                        + "LEFT JOIN item i ON i.id=s.item_id "
+                        + "WHERE i.bar_code=? AND s.remaining>0 "
+                        + "ORDER BY date ASC LIMIT 0, 1");
+        ps.setString(1, barCode);
+        ResultSet rs = ps.executeQuery();
+        if(rs.first()) {
+            return new Stock(
+                    rs.getInt("id"), Item.load(rs.getInt("item_id")), rs.getInt("qty"), 
+                    rs.getFloat("pch_amt"), rs.getInt("remaining"), rs.getFloat("price"),
+                    rs.getDate("date")
+            );
+        }else {
+            throw new SQLException("According to system records,\nthis item is out of stock."
+                    + "\nPlease verify actual stock and restock if necessary.");
+        }
     }
 }

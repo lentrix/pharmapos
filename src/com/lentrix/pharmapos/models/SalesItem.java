@@ -20,13 +20,15 @@ public class SalesItem {
     private Stock stock;
     private int qty;
     private float pricePerQuantity;
+    private float discount;
 
-    public SalesItem(int id, Sales sales, Stock stock, int qty, float pricePerQuantity) {
+    public SalesItem(int id, Sales sales, Stock stock, int qty, float pricePerQuantity, float discount) {
         this.id = id;
         this.sales = sales;
         this.stock = stock;
         this.qty = qty;
         this.pricePerQuantity = pricePerQuantity;
+        this.discount = discount;
     }
 
     public int getId() {
@@ -83,7 +85,8 @@ public class SalesItem {
                     Sales.load(rs.getInt("sales_id")),
                     Stock.load(rs.getInt("stock_id")),
                     rs.getInt("qty"),
-                    rs.getFloat("ppq")
+                    rs.getFloat("ppq"),
+                    rs.getFloat("disc")
             );
         }else {
             throw new SQLException("Sales Item ID# " + id + " not found.");
@@ -102,7 +105,8 @@ public class SalesItem {
                     Sales.load(rs.getInt("sales_id")),
                     Stock.load(rs.getInt("stock_id")),
                     rs.getInt("qty"),
-                    rs.getFloat("ppq")
+                    rs.getFloat("ppq"),
+                    rs.getFloat("disc")
             ));
         }
         return salesItems;
@@ -118,13 +122,14 @@ public class SalesItem {
     
     private void create() throws SQLException {
         PreparedStatement ps = DB.connect().prepareStatement(
-                "INSERT INTO sales_item (sales_id, stock_id, qty, ppq) "
-                        + "VALUES (?,?,?,?) ", PreparedStatement.RETURN_GENERATED_KEYS);
+                "INSERT INTO sales_item (sales_id, stock_id, qty, ppq, disc) "
+                        + "VALUES (?,?,?,?,?) ", PreparedStatement.RETURN_GENERATED_KEYS);
         ps.setInt(1, this.sales.getId());
         ps.setInt(2, this.stock.getId());
         ps.setInt(3, this.qty);
         ps.setFloat(4, this.pricePerQuantity);
-        ps.executeQuery();
+        ps.setFloat(5, this.discount);
+        ps.executeUpdate();
         
         ResultSet rs = ps.getGeneratedKeys();
         rs.first();
@@ -133,12 +138,26 @@ public class SalesItem {
     
     private void update() throws SQLException {
         PreparedStatement ps = DB.connect().prepareStatement(
-                "UPDATE sales_item SET sales_id=?, stock_id=?, qty=?, ppq=? "
+                "UPDATE sales_item SET sales_id=?, stock_id=?, qty=?, ppq=?, disc=? "
                         + "WHERE id=?");
         ps.setInt(1, this.sales.getId());
         ps.setInt(2, this.stock.getId());
         ps.setInt(3, this.qty);
         ps.setFloat(4, this.pricePerQuantity);
-        ps.setInt(5, this.id);
+        ps.setFloat(5, this.discount);
+        ps.setInt(6, this.id);
+        ps.executeUpdate();
+    }
+
+    public float getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(float discount) {
+        this.discount = discount;
+    }
+    
+    public float getFinalAmount() {
+        return (pricePerQuantity*qty)-discount;
     }
 }

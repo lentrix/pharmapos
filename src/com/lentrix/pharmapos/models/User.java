@@ -113,10 +113,10 @@ public class User {
     
     private void create() throws SQLException {
         PreparedStatement ps = DB.connect().prepareStatement(
-                "INSERT INTO user (user, password, fullname, role) "
+                "INSERT INTO user (user, password, full_name, role) "
                         + "VALUES (?,md5(?),?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
         ps.setString(1, user);
-        ps.setString(2, _password);
+        ps.setString(2, "12345");
         ps.setString(3, fullName);
         ps.setInt(4, role);
         ps.executeUpdate();

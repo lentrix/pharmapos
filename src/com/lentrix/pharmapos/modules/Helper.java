@@ -8,6 +8,7 @@ package com.lentrix.pharmapos.modules;
 import java.awt.Component;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -27,5 +28,19 @@ public class Helper {
     
     public static String formatSQLDateFull(java.sql.Date date) {
         return date.toLocalDate().format(DateTimeFormatter.ofPattern("MMMM d, u"));
+    }
+    
+    public static DefaultTableCellRenderer getRightRender() {
+        DefaultTableCellRenderer rightRender = new DefaultTableCellRenderer();
+        rightRender.setHorizontalAlignment(javax.swing.JLabel.RIGHT);
+        
+        return rightRender;
+    }
+    
+    public static DefaultTableCellRenderer getCenterRender() {
+        DefaultTableCellRenderer render = new DefaultTableCellRenderer();
+        render.setHorizontalAlignment(javax.swing.JLabel.CENTER);
+        
+        return render;
     }
 }

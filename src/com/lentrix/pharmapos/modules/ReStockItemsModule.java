@@ -129,7 +129,7 @@ public class ReStockItemsModule extends javax.swing.JFrame {
             }
         });
 
-        purchaseAmountField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        purchaseAmountField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         purchaseAmountField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         purchaseAmountField.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         purchaseAmountField.addActionListener(new java.awt.event.ActionListener() {
@@ -138,7 +138,7 @@ public class ReStockItemsModule extends javax.swing.JFrame {
             }
         });
 
-        sellingPriceField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        sellingPriceField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
         sellingPriceField.setHorizontalAlignment(javax.swing.JTextField.TRAILING);
         sellingPriceField.setFont(new java.awt.Font("Ubuntu", 0, 24)); // NOI18N
         sellingPriceField.addActionListener(new java.awt.event.ActionListener() {
@@ -230,6 +230,7 @@ public class ReStockItemsModule extends javax.swing.JFrame {
             }
         });
 
+        jList1.setFont(new java.awt.Font("URW Gothic L", 0, 18)); // NOI18N
         jList1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jList1KeyPressed(evt);

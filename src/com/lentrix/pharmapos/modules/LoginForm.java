@@ -159,8 +159,7 @@ public class LoginForm extends javax.swing.JFrame {
             if(user.getRole()==User.ADMIN) {
                 new AdminModule(user).setVisible(true);
             }else {
-                System.out.println("Load cashier module.");
-                System.exit(0);
+                new POSTerminal(null, user).setVisible(true);
             }
         }catch(SQLException ex) {
             invalidMessage.setText(ex.getMessage());

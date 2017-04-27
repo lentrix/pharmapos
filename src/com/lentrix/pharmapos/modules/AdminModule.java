@@ -81,7 +81,6 @@ public class AdminModule extends javax.swing.JFrame {
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
 
@@ -153,6 +152,11 @@ public class AdminModule extends javax.swing.JFrame {
         posTerminalButton.setText("POS Terminal");
         posTerminalButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         posTerminalButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        posTerminalButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                posTerminalButtonActionPerformed(evt);
+            }
+        });
         jPanel3.add(posTerminalButton);
 
         manageUsersButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/lentrix/pharmapos/images/users64.png"))); // NOI18N
@@ -219,6 +223,11 @@ public class AdminModule extends javax.swing.JFrame {
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_T, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem4.setText("POS Terminal");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
         jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_MASK));
@@ -256,10 +265,7 @@ public class AdminModule extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem7);
 
-        jMenuItem8.setText("Update User Info");
-        jMenu3.add(jMenuItem8);
-
-        jMenuItem12.setText("Backup Date");
+        jMenuItem12.setText("Backup Data");
         jMenu3.add(jMenuItem12);
 
         jMenuItem13.setText("Restore from Backup");
@@ -313,6 +319,14 @@ public class AdminModule extends javax.swing.JFrame {
         startManageUsersModule();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void posTerminalButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_posTerminalButtonActionPerformed
+        startPOSTerminalModule();
+    }//GEN-LAST:event_posTerminalButtonActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        startPOSTerminalModule();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     private void startManageUsersModule() {
         this.setVisible(false);
         new ManageUsersModule(this, true, user).setVisible(rootPaneCheckingEnabled);
@@ -348,7 +362,6 @@ public class AdminModule extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -364,5 +377,10 @@ public class AdminModule extends javax.swing.JFrame {
 
     private void startReStockItemModule() {
         new ReStockItemsModule(user).setVisible(true);
+    }
+
+    private void startPOSTerminalModule() {
+        new POSTerminal(this, user).setVisible(true);
+        setVisible(false);
     }
 }

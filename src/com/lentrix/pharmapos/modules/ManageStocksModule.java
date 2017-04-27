@@ -252,6 +252,7 @@ public class ManageStocksModule extends javax.swing.JDialog {
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_START);
 
+        jTable1.setFont(new java.awt.Font("URW Gothic L", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},

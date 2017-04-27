@@ -21,8 +21,8 @@ public class DB {
                 Class.forName("com.mysql.jdbc.Driver").newInstance();
                 String host = "localhost";
                 String dbName = "pharmacy";
-                String user = "root";
-                String password = "";
+                String user = "pharma-user";
+                String password = "system";
                 cxn = DriverManager.getConnection("jdbc:mysql://" + host + "/" + dbName, user, password);
             }catch(Exception ex) {
                 javax.swing.JOptionPane.showMessageDialog(null, ex.getMessage(),
